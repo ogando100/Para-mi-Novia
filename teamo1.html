@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti, Mi Amor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e63946;
+            --secondary-color: #f1faee;
+            --accent-color: #a8dadc;
+            --dark-color: #1d3557;
+            --text-color: #2b2d42;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--secondary-color);
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(230,57,70,0.1) 0%, rgba(241,250,238,0.3) 100%);
+            z-index: -1;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards 0.5s;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards 1s;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards 1.5s;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+        }
+        
+        .memories-section {
+            padding: 80px 20px;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--dark-color);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--accent-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+        
+        .memory {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .memory:nth-child(odd) {
+            left: 0;
+        }
+        
+        .memory:nth-child(even) {
+            left: 50%;
+        }
+        
+        .memory-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .memory-date {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .memory-title {
+            font-family: 'Playfair Display', serif;
+            margin: 10px 0;
+            color: var(--dark-color);
+        }
+        
+        .memory::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+        }
+        
+        .memory:nth-child(odd)::after {
+            right: -10px;
+        }
+        
+        .memory:nth-child(even)::after {
+            left: -10px;
+        }
+        
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .photo-item {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            height: 250px;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .love-letter {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .love-letter::before {
+            content: '"';
+            position: absolute;
+            font-family: 'Playfair Display', serif;
+            font-size: 120px;
+            color: rgba(230, 57, 70, 0.1);
+            top: 20px;
+            left: 20px;
+            line-height: 1;
+        }
+        
+        .letter-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--dark-color);
+            color: white;
+        }
+        
+        .heart-beat {
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .memory {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .memory:nth-child(even) {
+                left: 0;
+            }
+            
+            .memory::after {
+                left: 21px;
+            }
+            
+            .memory:nth-child(odd)::after {
+                right: auto;
+                left: 21px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>Para Ti, Mi Amor</h1>
+        <p class="subtitle">Cada línea de código en mi vida lleva tu nombre escrito en el corazón</p>
+        <a href="#memories" class="cta-button">Nuestra Historia</a>
+        
+        <!-- Corazones flotantes -->
+        <div id="hearts-container"></div>
+    </section>
+    
+    <section id="memories" class="memories-section">
+        <h2 class="section-title">Nuestra Línea de Tiempo</h2>
+        
+        <div class="timeline">
+            <div class="memory">
+                <div class="memory-content">
+                    <div class="memory-date">Primer Encuentro</div>
+                    <h3 class="memory-title">El día que todo comenzó</h3>
+                    <p>Recuerdo exactamente cómo te vi. El universo conspiró para que nuestros caminos se cruzaran.</p>
+                </div>
+            </div>
+            
+            <div class="memory">
+                <div class="memory-content">
+                    <div class="memory-date">Primera Cita</div>
+                    <h3 class="memory-title">Nervioso por un tubo realmente</h3>
+                    <p>Ese helado, tu olor, tan elegante, el sabor de tus besos, sabnia que no te podia quitar los ojos de arriba. Sabía que eras especial desde ese momento.</p>
+                </div>
+            </div>
+            
+            <div class="memory">
+                <div class="memory-content">
+                    <div class="memory-date">Nuestro Viaje</div>
+                    <h3 class="memory-title">Aventuras juntos</h3>
+                    <p>Cada lugar que visitaremos llevara el recuerdo de tu risa y tu compañía.</p>
+                </div>
+            </div>
+            
+            <div class="memory">
+                <div class="memory-content">
+                    <div class="memory-date">Hoy</div>
+                    <h3 class="memory-title">Mi razón para sonreír</h3>
+                    <p>Eres mi lugar seguro, mi hogar, mi mayor aventura y mi paz al mismo tiempo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="memories-section" style="background-color: var(--secondary-color);">
+        <h2 class="section-title">Nuestros Momentos</h2>
+        
+        <div class="photo-gallery">
+            <!-- Reemplaza con tus propias imágenes -->
+            <div class="photo-item">
+                <img src="agarrados de la mano.jpg.jpeg" alt="Momento especial">
+            </div>
+            <div class="photo-item">
+                <img src="dibujo.jpg.jpeg" alt="Momento especial">
+            </div>
+            <div class="photo-item">
+                <img src="ella comiendo.jpg.jpeg" alt="Momento especial">
+            </div>
+            <div class="photo-item">
+                <img src="salida.jpg.jpeg" alt="Momento especial">
+            </div>
+        </div>
+    </section>
+    
+    <section class="love-letter">
+        <div class="letter-content">
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--dark-color); margin-bottom: 20px;">Mi Promesa</h2>
+            <p>Querida [Edileicy],</p>
+            <p style="margin: 15px 0;">Si el amor fuera código, serías mi función más elegante, mi algoritmo más eficiente, el patrón de diseño perfecto que da sentido a todo mi sistema.</p>
+            <p style="margin: 15px 0;">Prometo ser tu stackoverflow cuando necesites respuestas, tu debugger cuando enfrentes problemas, y tu repositorio seguro donde siempre puedas hacer commit de tus pensamientos más profundos.</p>
+            <p style="margin: 15px 0;">No importa cuántos bugs encontremos en el camino, juntos podemos resolverlos. Porque contigo, cada día es un nuevo feature, un upgrade a mi existencia.</p>
+            <p style="text-align: right; font-style: italic; margin-top: 30px;">Con todo mi amor,<br>[Tu Nombre]</p>
+        </div>
+    </section>
+    
+    <footer>
+        <p>Hecho con <span class="heart-beat">❤️</span> por [Aron] - 2025</p>
+    </footer>
+    
+    <script>
+        // Animación para los recuerdos
+        document.addEventListener('DOMContentLoaded', () => {
+            const memories = document.querySelectorAll('.memory');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            memories.forEach(memory => {
+                observer.observe(memory);
+            });
+            
+            // Corazones flotantes
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.style.position = 'absolute';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = '-20px';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.opacity = Math.random() * 0.5 + 0.1;
+                heart.style.animation = `fall ${Math.random() * 5 + 3}s linear forwards`;
+                
+                document.getElementById('hearts-container').appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 8000);
+            }
+            
+            // Agregar estilo para corazones flotantes
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes fall {
+                    to {
+                        transform: translateY(100vh) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Crear corazones cada cierto tiempo
+            setInterval(createHeart, 300);
+        });
+    </script>
+</body>
+</html>
